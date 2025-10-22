@@ -1,0 +1,31 @@
+{
+  "name": "day2_federations",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "start:users": "node src/users-subgraph.js",
+    "start:posts": "node src/posts-subgraph.js",
+    "start:gateway": "node src/gateway-subgraph.js",
+    "json:server": "json-server --watch db.json --port 3000",
+    "start:all": "concurrently \"npm run json:server\" \"npm run start:users\" \"npm run start:posts\" \"npm run start:gateway\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@apollo/gateway": "^2.11.3",
+    "@apollo/server": "^5.0.0",
+    "@apollo/subgraph": "^2.11.3",
+    "graphql": "^16.11.0",
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
+  }
+}
