@@ -12,6 +12,10 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+node_modules
+dist/
+out/
+package-lock.json
 
 ### STS ###
 .apt_generated
