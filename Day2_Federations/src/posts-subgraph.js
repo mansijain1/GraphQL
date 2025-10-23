@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
   extend type User @key(fields: "id") {
     id: ID! 
+    name: String! @external
     posts: [Post]
   }
 
@@ -13,6 +14,7 @@ const typeDefs = gql`
     id: ID!
     title: String!
     authorId: ID!
+    author: User @provides(fields: "name")
   }
 
   type Query {
@@ -35,7 +37,18 @@ const resolvers = {
       const posts = await res.json();
       return posts.filter((post) => post.authorId === user.id);
     }
-  }
+  },
+  Post: {
+     author: async (post) => {
+      return fetch(`http://localhost:3000/users/${post.authorId}`)
+        .then(res => res.json())
+        .then(user => ({
+          __typename: 'User',
+          id: post.authorId,
+          name: user.name,
+        }));
+    },
+  },
 };
 
 const server = new ApolloServer({
@@ -45,5 +58,7 @@ const server = new ApolloServer({
 startStandaloneServer(server, {
   listen: { port: 4002 },
 }).then(({ url }) => {
-  console.log(`🚀 Posts subgraph ready at ${url}`);
+  console.log(`Posts subgraph ready at ${url}`);
+}).catch((err) => {
+  console.error("Failed to start posts subgraph:", err);
 });

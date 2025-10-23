@@ -11,10 +11,13 @@ const gateway = new ApolloGateway({
 
 const server = new ApolloServer({
   gateway,
+  subscriptions: false,
 });
 
 startStandaloneServer(server, {
   listen: { port: 4000 },
 }).then(({ url }) => {
   console.log(`🚀 Gateway ready at ${url}`);
+}).catch((err) => {
+  console.error("Failed to start gateway subgraph", err);
 });

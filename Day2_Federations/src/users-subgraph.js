@@ -9,7 +9,7 @@ const typeDefs = gql`
     name: String!
   }
 
-  extend type Query {
+  type Query {
     users: [User]
     user(id: ID!): User
   }
@@ -43,7 +43,7 @@ const server = new ApolloServer({
 startStandaloneServer(server, {
   listen: { port: 4001 },
 }).then(({ url }) => {
-  console.log(`🚀 Users subgraph ready at ${url}`);
+  console.log(`Users subgraph ready at ${url}`);
 }).catch((err) => {
-  console.error("❌ Failed to start users subgraph:", err);
+  console.error("Failed to start users subgraph:", err);
 });
