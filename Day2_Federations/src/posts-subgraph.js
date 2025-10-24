@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
   extend type User @key(fields: "id") {
-    id: ID! @external
+    id: ID!
     name: String! @external
     posts: [Post]
   }
