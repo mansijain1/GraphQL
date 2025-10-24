@@ -1,42 +1,36 @@
-directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
-
-directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
-
-directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
-
-directive @external(reason: String) on OBJECT | FIELD_DEFINITION
-
-directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
-
-directive @extends on OBJECT | INTERFACE
-
-extend type User
-  @key(fields: "id")
-{
-  id: ID!
-  name: String! @external
-  posts: [Post]
-}
-
+scalar _FieldSet
+scalar _Any
 type Post {
   id: ID!
   title: String!
   authorId: ID!
-  author: User @provides(fields: "name")
+  author: User
 }
-
 type Query {
   posts: [Post]
   _entities(representations: [_Any!]!): [_Entity]!
   _service: _Service!
 }
-
-scalar _FieldSet
-
-scalar _Any
-
 type _Service {
   sdl: String
 }
-
+type User {
+  id: ID!
+  name: String!
+  posts: [Post]
+}
 union _Entity = User
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) on OBJECT | INTERFACE
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+directive @external(reason: String) on OBJECT | FIELD_DEFINITION
+directive @tag(name: String!) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @extends on OBJECT | INTERFACE
+"Exposes a URL that specifies the behavior of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behavior of this scalar."
+    url: String!
+  ) on SCALAR
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
+
