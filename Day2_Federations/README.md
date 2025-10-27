@@ -20,9 +20,18 @@ It includes **two subgraphs** — `users` and `posts` — and a **federated gate
 
    - The gateway composes both subgraphs into a single federated schema.
 
- **1. Using a Pre-Composed Supergraph**
+**1. Using a Pre-Composed Supergraph**
 
    <pre> 
+    import fs from 'node:fs';
+    import path from 'node:path';
+    import { fileURLToPath } from 'node:url';
+
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const supergraphPath = path.join(__dirname, '../src/schema/supergraph-schema.graphql');
+    const supergraphSdl = fs.readFileSync(supergraphPath, 'utf-8');
+
     const gateway = new ApolloGateway({
     supergraphSdl,
     });
@@ -45,14 +54,84 @@ It includes **two subgraphs** — `users` and `posts` — and a **federated gate
 
 ## Federation Configuration (supergraph-config.yaml)
 
-The config file defines all subgraphs and their schemas. This command generates the federated supergraph schema that the Apollo Gateway uses.
-<pre> 
+  The config file defines all subgraphs and their schemas. This command generates the federated supergraph schema that the Apollo Gateway uses.
+  <pre> 
     rover supergraph compose --config ./supergraph-config.yaml > src/schema/supergraph-schema.graphql
   </pre>
 
 ## Run the project with command 
-1. To start all services
-<pre>  npm run start:all </pre>
+  1. To start all services
+  <pre>  npm run start:all </pre>
 
-2. To run the client
-<pre>  npm run start:client </pre>
+  2. To run the client
+  <pre>  npm run start:client </pre>
+
+### Authenticate Rover with Apollo Studio
+
+  Before using Rover to check or publish schemas, you need to authenticate it with your Apollo Studio account.
+
+Step 1: Generate an Apollo API Key
+
+1. Go to [Apollo Studio](https://studio.apollographql.com/) and log in.  
+2. Click on your profile → **Organization Settings** → **API Keys**.  
+3. Click **New API Key**, give it a name (e.g., `Rover CLI Key`)
+4. Copy the generated API key — you will use it to log in via Rover.
+
+Step 2: Login with Rover CLI
+
+In your terminal, run:
+
+  ```bash
+  rover auth login
+  ```
+
+## Introspect and Publish Subgraphs
+
+  1.Introspect subgraph schemas from running services:
+  — tells Rover to fetch the schema from a running subgraph service.
+
+  ```bash
+  rover subgraph introspect http://localhost:4001/graphql > schema/users-schema.graphql
+  rover subgraph introspect http://localhost:4002/graphql > schema/posts-schema.graphql
+  ```
+
+  2.Publish subgraph schema to Apollo Studio:
+   ```bash
+  rover graph check --schema ./schema/posts-schema.graphql posts-graph@current
+  rover graph publish --schema ./schema/posts-schema.graphql posts-graph@current
+  ``` 
+
+**Repeat the same steps for other subgraphs**
+
+## Expose Services
+
+  Expose your running service using Ngrok:
+  ```bash
+  ngrok http 4000
+  ```
+
+  Add the Ngrok URL as the subgraph endpoint in Apollo Studio.
+
+
+## Update Subgraph Schema
+
+  1. Update the schema locally (e.g., users-schema.graphql).
+
+  2. Check changes:
+```bash
+  rover graph check --schema ./schema/users-schema.graphql My-Graph-3n7lh@current 
+```
+
+ 3. Publish updated schema:
+ ```bash
+ rover graph publish --schema ./schema/users-schema.graphql My-Graph-3n7lh@current
+```
+
+## **Limitations on Free Tier**
+
+  - Free-tier Apollo Studio does not allow automatic supergraph composition. Does not provide COMPOSITION PERMISIION for the graph Api key
+
+  - Supergraph schema cannot be published manually on free-tier.
+
+  - Therefore, the supergraph may show the old schema until you upgrade or use a higher tier with composition permissions.
+

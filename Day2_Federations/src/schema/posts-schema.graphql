@@ -10,11 +10,16 @@ directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFAC
 
 directive @extends on OBJECT | INTERFACE
 
-extend type User
+type User
   @key(fields: "id")
 {
   id: ID!
   name: String! @external
+}
+
+extend type User
+  @key(fields: "id")
+{
   posts: [Post]
 }
 
@@ -22,6 +27,9 @@ type Post {
   id: ID!
   title: String!
   authorId: ID!
+
+  """Number of views the post has received"""
+  views: Int!
   author: User @provides(fields: "name")
 }
 

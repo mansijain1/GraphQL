@@ -1,31 +1,31 @@
 {
   "users": [
-    { "id": "1", "name": "Alice" },
-    { "id": "2", "name": "Bob" },
-    { "id": "3", "name": "Charlie" },
-    { "id": "4", "name": "Diana" },
-    { "id": "5", "name": "Ethan" }
+    { "id": "1", "name": "Alice", "age": 25 },
+    { "id": "2", "name": "Bob" , "age": 21},
+    { "id": "3", "name": "Charlie", "age": 30 },
+    { "id": "4", "name": "Diana" , "age": 38},
+    { "id": "5", "name": "Ethan" , "age": 31}
   ],
-   "posts": [
-    { "id": "a", "title": "Understanding GraphQL Federation", "authorId": "1" },
-    { "id": "b", "title": "Scaling Microservices with Apollo", "authorId": "2" },
-    { "id": "c", "title": "A Guide to React Server Components", "authorId": "3" },
-    { "id": "d", "title": "Top 10 Practices for Clean Code", "authorId": "4" },
-    { "id": "e", "title": "Deploying Docker Containers with GitHub Actions", "authorId": "5" },
-    { "id": "f", "title": "Introduction to Event-Driven Architecture", "authorId": "1" },
-    { "id": "g", "title": "Managing State in Large React Applications", "authorId": "2" },
-    { "id": "h", "title": "What’s New in TypeScript 5.2", "authorId": "3" },
-    { "id": "i", "title": "Optimizing Web Performance in 2025", "authorId": "4" },
-    { "id": "j", "title": "Full-Stack Development with Next.js and Prisma", "authorId": "5" },
-    { "id": "k", "title": "Building Resilient APIs with Retry Logic", "authorId": "1" },
-    { "id": "l", "title": "Using Redis for Real-Time Applications", "authorId": "2" },
-    { "id": "m", "title": "Securing Applications with OAuth 2.0", "authorId": "3" },
-    { "id": "n", "title": "Improving Developer Experience with Monorepos", "authorId": "4" },
-    { "id": "o", "title": "Kubernetes for Beginners: A Quick Start", "authorId": "5" },
-    { "id": "p", "title": "Creating Accessible Web Interfaces", "authorId": "1" },
-    { "id": "q", "title": "AI in the Frontend: Leveraging LLMs in UI", "authorId": "2" },
-    { "id": "r", "title": "Effective Logging and Monitoring with OpenTelemetry", "authorId": "3" },
-    { "id": "s", "title": "Serverless Architecture: Pros and Cons", "authorId": "4" },
-    { "id": "t", "title": "Integrating Stripe for SaaS Billing", "authorId": "5" }
+  "posts": [
+    { "id": "a", "title": "Understanding GraphQL Federation", "authorId": "1", "views": 120 },
+    { "id": "b", "title": "Scaling Microservices with Apollo", "authorId": "2", "views": 85 },
+    { "id": "c", "title": "A Guide to React Server Components", "authorId": "3", "views": 50 },
+    { "id": "d", "title": "Top 10 Practices for Clean Code", "authorId": "4", "views": 95 },
+    { "id": "e", "title": "Deploying Docker Containers with GitHub Actions", "authorId": "5", "views": 70 },
+    { "id": "f", "title": "Introduction to Event-Driven Architecture", "authorId": "1", "views": 60 },
+    { "id": "g", "title": "Managing State in Large React Applications", "authorId": "2", "views": 110 },
+    { "id": "h", "title": "What’s New in TypeScript 5.2", "authorId": "3", "views": 45 },
+    { "id": "i", "title": "Optimizing Web Performance in 2025", "authorId": "4", "views": 88 },
+    { "id": "j", "title": "Full-Stack Development with Next.js and Prisma", "authorId": "5", "views": 130 },
+    { "id": "k", "title": "Building Resilient APIs with Retry Logic", "authorId": "1", "views": 72 },
+    { "id": "l", "title": "Using Redis for Real-Time Applications", "authorId": "2", "views": 98 },
+    { "id": "m", "title": "Securing Applications with OAuth 2.0", "authorId": "3", "views": 55 },
+    { "id": "n", "title": "Improving Developer Experience with Monorepos", "authorId": "4", "views": 67 },
+    { "id": "o", "title": "Kubernetes for Beginners: A Quick Start", "authorId": "5", "views": 43 },
+    { "id": "p", "title": "Creating Accessible Web Interfaces", "authorId": "1", "views": 99 },
+    { "id": "q", "title": "AI in the Frontend: Leveraging LLMs in UI", "authorId": "2", "views": 120 },
+    { "id": "r", "title": "Effective Logging and Monitoring with OpenTelemetry", "authorId": "3", "views": 80 },
+    { "id": "s", "title": "Serverless Architecture: Pros and Cons", "authorId": "4", "views": 65 },
+    { "id": "t", "title": "Integrating Stripe for SaaS Billing", "authorId": "5", "views": 75 }
   ]
 }

@@ -4,17 +4,29 @@ import { ApolloServer } from '@apollo/server';
 import gql from 'graphql-tag'; 
 
 const typeDefs = gql`
-  extend type User @key(fields: "id") {
+  # extend type User @key(fields: "id") {
+  #   id: ID!
+  #   name: String! @external
+  #   posts: [Post]
+  # }
+
+# Created local stub so even if User subgraph not present Posts will work
+  type User @key(fields: "id") {
     id: ID!
     name: String! @external
-    posts: [Post]
   }
 
   type Post {
     id: ID!
     title: String!
     authorId: ID!
+    """Number of views the post has received"""
+    views: Int!
     author: User @provides(fields: "name")
+  }
+
+  extend type User @key(fields: "id") {
+    posts: [Post]
   }
 
   type Query {
