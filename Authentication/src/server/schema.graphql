@@ -1,0 +1,44 @@
+directive @authenticated on OBJECT | FIELD_DEFINITION
+
+directive @requiresScopes(scopes: [String!]) on OBJECT | FIELD_DEFINITION
+
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @external(reason: String) on OBJECT | FIELD_DEFINITION
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @extends on OBJECT | INTERFACE
+
+type User
+  @authenticated
+{
+  id: ID!
+  username: String!
+  role: String
+}
+
+type Query {
+  me: User @authenticated
+  users: [User!]! @requiresScopes(scopes: ["ADMIN"])
+  adminData: String @requiresScopes(scopes: ["ADMIN"])
+  userById(id: ID!): User
+  _service: _Service!
+}
+
+type Mutation {
+  login(username: String!, password: String!): String
+  createUser(username: String!, password: String!): User
+}
+
+scalar _FieldSet
+
+scalar _Any
+
+type _Service {
+  sdl: String
+}

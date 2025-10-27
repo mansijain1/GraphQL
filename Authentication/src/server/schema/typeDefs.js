@@ -1,15 +1,20 @@
-export const typeDefs = `#graphql
-  type User {
+import { gql } from 'graphql-tag';
+
+export const typeDefs = gql`
+
+  extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.5",
+        import: ["@authenticated", "@requiresScopes"])
+
+  type User @authenticated {
     id: ID!
     username: String!
-    role: String!
+    role: String
   }
 
   type Query {
-    me: User
-    users: [User!]!
-    # users: [User!]! @requiresScopes(scopes: ["ADMIN"])
-    # adminData: String @requiresScopes(scopes: ["ADMIN"])
+    me: User @authenticated
+    users: [User!]! @requiresScopes(scopes: ["admin"])
     userById(id: ID!): User
   }
 
