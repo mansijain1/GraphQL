@@ -1,0 +1,36 @@
+{
+  "name": "reactive_datasource",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "start": "npm run compile && node ./dist/index.js",
+    "start:client": "node src/stream-client.js",
+    "start:stream": "node src/new-stream.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@apollo/client": "^4.0.7",
+    "@apollo/server": "^5.0.0",
+    "@graphql-tools/schema": "^10.0.25",
+    "@graphql-yoga/plugin-defer-stream": "^3.16.0",
+    "cross-fetch": "^4.1.0",
+    "express": "^5.1.0",
+    "graphql": "^16.11.0",
+    "graphql-helix": "^1.13.0",
+    "graphql-tag": "^2.12.6",
+    "graphql-yoga": "^5.16.0",
+    "http": "^0.0.1-security",
+    "react-native-fetch-api": "^3.0.0",
+    "react-native-polyfill-globals": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.3"
+  }
+}

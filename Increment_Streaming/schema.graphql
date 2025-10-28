@@ -1,0 +1,22 @@
+type Author {
+  id: ID!
+  name: String!
+  bio: String
+}
+type Post {
+  id: ID!
+  title: String!
+  body: String
+  author: Author!
+}
+type Query {
+  posts: [Post!]!
+}
+"Exposes a URL that specifies the behavior of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behavior of this scalar."
+    url: String!
+  ) on SCALAR
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
+
