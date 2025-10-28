@@ -7,7 +7,8 @@
     "compile": "tsc",
     "start": "npm run compile && node ./dist/index.js",
     "start:client": "node src/stream-client.js",
-    "start:stream": "node src/new-stream.js"
+    "start:new-stream": "node src/server/new-stream.js",
+    "start:posts-stream": "node src/server/posts-stream.js"
   },
   "keywords": [],
   "author": "",
