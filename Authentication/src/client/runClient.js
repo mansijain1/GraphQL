@@ -6,6 +6,6 @@ import { getUser } from "./getUser.js";
     const token = await login();
     await getUser(token);
   } catch (err) {
-    console.error(" Client error:", err.message);
+    console.error("Client error:", err.message);
   }
 })();

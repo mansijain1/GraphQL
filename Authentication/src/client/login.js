@@ -1,9 +1,5 @@
 export const login = async () => {
-  const query = `
-    mutation Login($username: String!, $password: String!) {
-      login(username: $username, password: $password)
-    }
-  `;
+  const query = `mutation login($username: String!, $password: String!) { login(username: $username, password: $password) }`;
 
   const response = await fetch("http://localhost:4000/graphql", {
     method: "POST",

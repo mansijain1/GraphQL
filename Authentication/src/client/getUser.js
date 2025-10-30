@@ -1,12 +1,5 @@
 export const getUser = async (token) => {
-  const query = `
-    query {
-      me {
-        id
-        username
-      }
-    }
-  `;
+  const query = `query me { me { id username role } }`;
 
   const response = await fetch("http://localhost:4000/graphql", {
     method: "POST",
