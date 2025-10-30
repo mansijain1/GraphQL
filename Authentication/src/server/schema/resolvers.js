@@ -4,10 +4,8 @@ import { users } from "../data/users.js";
 export const resolvers = {
   Query: {
     me: (_, __, { user }) => user,
-    userById: (_, { id }) => {
-      const found = users.find((u) => u.id === Number(id));
-      if (!found) throw new Error("User not found");
-      return found;
+    userById: async (_, { id }, { loaders }) => {
+      return loaders.userLoader.load(Number(id));
     },
     users: () => users,
   },
