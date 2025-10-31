@@ -17,10 +17,3 @@ const sdk = new NodeSDK({
 
 await sdk.start();
 console.log("OpenTelemetry tracing started");
-
-// docker run -d --name jaeger \
-//   -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
-//   -p 16686:16686 \
-//   -p 14268:14268 \
-//   -p 14250:14250 \
-//   jaegertracing/all-in-one:1.43

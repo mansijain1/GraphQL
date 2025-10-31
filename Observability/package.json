@@ -14,14 +14,20 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^5.1.0",
+    "@apollo/server-plugin-response-cache": "^5.0.0",
     "@apollo/usage-reporting-protobuf": "^4.1.1",
+    "@apollo/utils.keyvaluecache": "^4.0.0",
+    "@escape.tech/graphql-armor-cost-limit": "^2.4.3",
     "@opentelemetry/api": "^1.9.0",
     "@opentelemetry/auto-instrumentations-node": "^0.66.0",
     "@opentelemetry/exporter-trace-otlp-http": "^0.207.0",
     "@opentelemetry/instrumentation-graphql": "^0.55.0",
     "@opentelemetry/instrumentation-http": "^0.207.0",
     "@opentelemetry/sdk-node": "^0.207.0",
+    "dataloader": "^2.2.3",
+    "dotenv": "^17.2.3",
     "graphql": "^16.11.0",
+    "graphql-depth-limit": "^1.1.0",
     "graphql-tag": "^2.12.6"
   },
   "devDependencies": {

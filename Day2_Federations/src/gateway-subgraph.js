@@ -17,7 +17,7 @@ const server = new ApolloServer({
 startStandaloneServer(server, {
   listen: { port: 4000 },
 }).then(({ url }) => {
-  console.log(`🚀 Gateway ready at ${url}`);
+  console.log(`Gateway ready at ${url}`);
 }).catch((err) => {
   console.error("Failed to start gateway subgraph", err);
 });

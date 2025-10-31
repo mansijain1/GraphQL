@@ -71,7 +71,7 @@ export const startServer = async () => {
       const token = req.headers.authorization?.replace("Bearer ", "") || "";
       const user = getUserFromToken(token);
 
-       return {
+      return {
         user,
         loaders: {
           userLoader: createUserLoader(),
@@ -84,6 +84,6 @@ export const startServer = async () => {
   });
   console.log(`Server ready at ${url}`);
 } catch (err) {
-  console.error("❌ Server failed to start:", err);
+  console.error("Server failed to start:", err);
 }
 };

@@ -1,4 +1,6 @@
 import { books } from "../data/bookData.js";
+import { cacheControlFromInfo } from '@apollo/cache-control-types';
+import { performance } from 'node:perf_hooks';
 
 const traceResolver = (resolver) => async (parent, args, context, info) => {
   const start = performance.now();
@@ -10,10 +12,14 @@ const traceResolver = (resolver) => async (parent, args, context, info) => {
 
 export const resolvers = {
   Query: {
-    bookById: (_, { id }) => books.find((b) => b.id === id),
+    bookById: async (_, { id }, { bookLoader} , info) => {
+      const cacheControl = cacheControlFromInfo(info);
+      cacheControl.setCacheHint({ maxAge: 60, scope: 'PRIVATE' }); // dynamic cache- override schema level hints
+      return bookLoader.load(id);
+    },
     allBooks: () => books,
   },
-    Book: {
+  Book: {
     id: traceResolver((b) => b.id),
     title: traceResolver((b) => b.title),
     author: traceResolver((b) => b.author),

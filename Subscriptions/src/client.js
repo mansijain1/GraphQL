@@ -64,7 +64,7 @@ client.subscribe(
       const msg = data.messageAdded;
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
-      console.log(`📩 ${msg.content}`);
+      console.log(`${msg.content}`);
       rl.prompt(true);
     },
     error: (err) => console.error('Subscription error:', err),
@@ -77,7 +77,7 @@ rl.on('line', async (line) => {
   const content = line.trim();
   if (!content) return rl.prompt();
   if (content.toLowerCase() === 'exit') {
-    console.log('👋 Goodbye!');
+    console.log('Goodbye!');
     process.exit(0);
   }
 
