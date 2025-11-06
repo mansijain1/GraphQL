@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require('graphql-tag');
 const { produce } = require('../kafka/producer');
 const { addUser, getUser, getAllUsers , updateUser, deleteUser} = require('./readModel');
 
@@ -7,7 +7,23 @@ const topic = process.env.KAFKA_TOPIC;
 const typeDefs = gql`
   type User {
     id: ID!
-    name: String!
+    name: String
+  }
+
+  type UserEvent {
+    type: String!
+    data: User
+  }
+
+  type UserAnalytics {
+    window_start: String
+    window_end: String
+    created_count: Int
+  }
+
+  type Subscription {
+    userEvents: UserEvent!
+    userAnalytics: UserAnalytics!
   }
 
   type Query {
@@ -37,7 +53,7 @@ const resolvers = {
       return user;
     },
     deleteUser: async (_, { id }) => {
-       const user = getUser(Number(id));
+      const user = getUser(Number(id));
       if (!user) throw new Error('User not found');
      
       const event = { type: 'USER_DELETED', data: { id: Number(id) } };
@@ -55,7 +71,18 @@ const resolvers = {
 
       await produce(topic, event);
        // update read model immediately for synchronous response
-       return updateUser(Number(id), updatedUser);
+      return updateUser(Number(id), updatedUser);
+    },
+  },
+  Subscription: {
+    userEvents: {
+      subscribe: (_, __, { pubsub }) => {console.log('Subscription resolver received pubsub:', !!pubsub);
+        return pubsub.asyncIterator(['USER_EVENTS']);
+      }
+    },
+    userAnalytics: {
+      subscribe: (_, __, { pubsub }) =>
+        pubsub.asyncIterator(['USER_ANALYTICS']),
     },
   },
 };
