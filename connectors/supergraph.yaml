@@ -1,0 +1,7 @@
+subgraphs:
+  subgraph:
+    routing_url: http://ignore
+    schema:
+      file: listings.graphql
+      # file: schema.graphql
+federation_version: =2.11.0

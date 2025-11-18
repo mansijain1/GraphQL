@@ -1,0 +1,149 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.11", import: ["@key"])
+  @link(
+    url: "https://specs.apollo.dev/connect/v0.2"
+    import: ["@source", "@connect"]
+  )
+  @source(
+    name: "listings"
+    http: { baseURL: "https://airlock-listings.demo-api.apollo.dev" }
+  )
+
+type Query {
+  "A curated array of listings to feature on the homepage"
+  featuredListings: [Listing!]!
+    @connect(
+      source: "listings"
+      http: { GET: "/featured-listings" }
+      selection: """
+      id
+      title
+      numOfBeds
+      costPerNight
+      # In the api it is bookings so name should be same for correct mapping
+      closedForBooking: closedForBookings
+      """
+    )
+
+  "A specific Listing"
+  listing(id: ID!): Listing @connect(
+    source: "listings"
+    http: { GET: "/listings/{$args.id}" }
+    selection: """
+    id
+    title
+    numOfBeds
+    costPerNight
+    closedForBooking: closedForBookings
+    description
+    photoThumbnail
+    latitude
+    longitude
+    """
+    entity:true
+  )
+}
+
+"A particular intergalactic location available for booking"
+type Listing
+  @connect(
+    source: "listings"
+    http: { GET: "/listings/{$this.id}" }
+    selection: """
+    id
+    title
+    numOfBeds
+    costPerNight
+    closedForBooking: closedForBookings
+    description
+    photoThumbnail
+    latitude
+    longitude
+    """
+  )
+  @key(fields: "id") {
+  id: ID!
+  "The listing's title"
+  title: String!
+  "The number of beds available"
+  numOfBeds: Int
+  "The cost per night"
+  costPerNight: Float
+  "Indicates whether listing is closed for bookings (on hiatus)"
+  closedForBooking: Boolean
+  "The listing's description"
+  description: String
+  "The thumbnail image for the listing"
+  photoThumbnail: String
+  "Latitude coordinates for the destination"
+  latitude: Float
+  "Longitude coordinates for the destination"
+  longitude: Float
+
+  "The amenities available for this listing"
+  amenities: [Amenity!]! @connect(
+    source: "listings"
+    http: { GET: "/listings/{$this.id}/amenities" }
+    selection: """
+    id
+    name
+    category
+    """
+    )
+}
+
+type Amenity {
+  id: ID!
+  "The amenity category the amenity belongs to"
+  category: String!
+  "The amenity's name"
+  name: String!
+}
+
+input CreateListingInput {
+  title: String!
+  numOfBeds: Int!
+  costPerNight: Float!
+}
+
+type CreateListingResponse {
+  listing: Listing
+}
+
+type Mutation {
+  createListing(input: CreateListingInput!): CreateListingResponse
+  @connect(
+  source: "listings"
+  http: {
+    POST: "/listings"
+    headers: [
+      { name: "Api-Key", from: "Api-Key" }
+    ]
+    body: """
+    listing: {
+      title: $args.input.title
+      numOfBeds: $args.input.numOfBeds
+      costPerNight: $args.input.costPerNight
+    }
+    """
+  }
+  selection: """
+  listing: {
+    id
+    title
+    numOfBeds
+    costPerNight
+    closedForBooking: closedForBookings
+    description
+    photoThumbnail
+    latitude
+    longitude
+    amenities {
+      id
+      name
+      category
+    }
+  }
+  """
+  )
+}

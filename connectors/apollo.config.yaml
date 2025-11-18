@@ -1,0 +1,5 @@
+rover: {}
+
+# APOLLO_KEY=service:apollo-connectors-6vz1178:ZfvHZS0UHlC4XoGFQD4k-A \
+# APOLLO_GRAPH_REF=apollo-connectors-6vz1178@current (Formatted graph-id@variant \
+# rover dev --supergraph-config supergraph.yaml
